@@ -19,8 +19,10 @@
         Цена не указана
       </span>
     </div>
-    <div class="good__count">
-      <span>{{ count }}</span>
+    <div class="good__count">    
+      <button @click="increaseCounter" class="plus-btn">+</button>
+      <span class="count-num">{{count}}</span>
+      <button @click="decreaseCounter" class="minus-btn">-</button>
     </div>
   </div>
   </div>
@@ -57,19 +59,25 @@ export default {
       return this.$store.getters.getCartLastItemId;
     },
     notLast() {
-      return (this.id !== this.cartLastItemId);
-    }
+      return this.id !== this.cartLastItemId;
+    },
   },
   methods: {
     removeFromCart() {
       this.$store.commit("removeFromCart", this.id);
+    },
+    increaseCounter() {
+      this.$store.commit("increaseCount", this.id);
+    },
+    decreaseCounter() {
+      this.$store.commit("decreaseCount", this.id);
     },
   },
 };
 </script>
 
 <style>
-  @import "../style/colors.css";
+@import "../style/colors.css";
 </style>
 
  <style lang="less" scoped>
@@ -85,20 +93,20 @@ export default {
   }
   &__image {
     margin: auto auto;
-    grid-row: 1 e('/') 3;
+    grid-row: 1 e("/") 3;
   }
   &__title {
-    grid-row: 1 e('/') 2;
+    grid-row: 1 e("/") 2;
     margin-top: 4px;
     margin: auto 0;
   }
   &__cost {
-    grid-row: 1 e('/') 3;
+    grid-row: 1 e("/") 3;
     margin: auto auto;
     font-weight: 600;
   }
   &__count {
-    grid-row: 1 e('/') 3;
+    grid-row: 1 e("/") 3;
     margin: auto auto;
     font-weight: 600;
   }
@@ -106,14 +114,34 @@ export default {
   &__remove-from-cart-btn:hover,
   &__remove-from-cart-btn:active,
   &__remove-from-cart-btn:focus {
-    grid-row: 2 e('/') 3;
+    grid-row: 2 e("/") 3;
     text-decoration: none;
     color: var(--primary);
     margin: auto 0;
   }
-
-}  
+}
 .bottom_line {
-    border-bottom: 1px solid lightgray;
-  }
+  border-bottom: 1px solid lightgray;
+}
+.plus-btn,
+.minus-btn {
+  margin-top: 16px;
+  background-color: lightgrey;
+  border: none;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.plus-btn:hover,
+.minus-btn:hover {
+  background-color: grey;
+}
+.minus-btn, .count-num {
+  margin-left: 8px;
+}
 </style>

@@ -38,6 +38,23 @@ export default new Vuex.Store({
     removeFromCart(state, goodId) {
       state.goodsInCart = state.goodsInCart.filter((it) => it.id !== goodId);
     },
+    increaseCount(state, goodId) {
+       state.goodsInCart.forEach((el) => {
+        if (el.id === goodId) {
+          el.count++;
+        }
+      })
+    },
+    decreaseCount(state, goodId) {
+      state.goodsInCart.forEach((el) => {
+       if (el.id === goodId && el.count > 0) {
+         el.count--;
+        }
+        if (el.count === 0) {
+         state.goodsInCart = state.goodsInCart.filter((el) => el.id !== goodId)
+        }
+     })
+   }
   },
   actions: {
     async fetchGoods(context) {
@@ -78,7 +95,7 @@ export default new Vuex.Store({
       );
     },
     getCartLastItemId: (state) => {
-      return state.goodsInCart[state.goodsInCart.length - 1].id;
+      return state.goodsInCart[state.goodsInCart.length - 1]?.id;
     },
   },
   modules: {},

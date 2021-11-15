@@ -13,9 +13,14 @@
       </span>
     </div>
     <div class="good__title">{{ title }}</div>
-      <button @click="addToCart" class="good__to-cart">
-        В корзину
-      </button>
+    <div v-if="getCountInCart" class="good__in-cart">
+      <button @click="increaseCounter" class="plus-btn">+</button>
+      <span class="good__count">{{getCountInCart}}</span>
+      <button @click="decreaseCounter" class="minus-btn">-</button>
+    </div>
+    <button v-else @click="addToCart" class="good__to-cart">
+      В корзину
+    </button>
   </div>
 </template>
 
@@ -41,6 +46,19 @@ export default {
       type: [Number, null],
     },
   },
+
+  computed: {
+    getGoodsInCart() {
+      return this.$store.getters.getGoodsInCart;
+    },
+    getCountInCart() {
+      const inCart = this.getGoodsInCart.find((item) => item.id === this.id);
+      if (inCart) {
+        return inCart.count;
+      }
+      return 0;
+    },
+  },
   methods: {
     addToCart() {
       this.$store.commit("addGoodToCart", {
@@ -49,13 +67,20 @@ export default {
         cost: this.cost,
         image: this.image,
       });
+      this.count = this.getCountInCart;
+    },
+    increaseCounter() {
+      this.$store.commit("increaseCount", this.id);
+    },
+    decreaseCounter() {
+      this.$store.commit("decreaseCount", this.id);
     },
   },
 };
 </script>
 
 <style>
-  @import "../style/colors.css";
+@import "../style/colors.css";
 </style>
 
  <style lang="less" scoped>
@@ -83,5 +108,29 @@ export default {
     border-radius: 6px;
     cursor: pointer;
   }
+  &__count {
+    margin-left: 8px;
+  }
+}
+.plus-btn,
+.minus-btn {
+  margin-top: 16px;
+  background-color: lightgrey;
+  border: none;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.plus-btn:hover,
+.minus-btn:hover {
+  background-color: grey;
+}
+.minus-btn {
+  margin-left: 8px;
 }
 </style>
