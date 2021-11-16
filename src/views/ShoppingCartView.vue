@@ -2,7 +2,10 @@
   <div class="cart__container">
     <div class="header__wrapper">
       <div class="cart__title">Корзина</div>
-      <button @click="$router.push('/')" class="button__to-home">На главную</button>
+      <div class="buttons__wrppaer">
+        <button @click="$router.push('/')" class="button__to-home">На главную</button>
+        <button @click="$router.push('/favs')" class="button__to-favs">В избранное</button>
+      </div>
     </div>
     <div class="cart__wrapper">
       <div v-if="goodsInCart.length === 0" class="cart__empty">
@@ -76,7 +79,7 @@ export default {
 </script>
 
 <style>
-  @import "../style/colors.css";
+@import "../style/colors.css";
 </style>
 <style lang="less" scoped>
 .cart {
@@ -135,22 +138,7 @@ export default {
 .text-center {
   margin: auto auto;
 }
-.button {
-  &__buy-goods {
-    grid-row: 1 e("/") 3;
-    background-color: var(--checkout-btn);
-    border: none;
-    color: white;
-    padding: 8px 48px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 4px;
-    margin: 0 auto;
-    height: 44px;
-  }
-}
+
 .goods {
   &__overall-count {
     display: flex;
@@ -163,7 +151,8 @@ export default {
   }
 }
 .button {
-  &__to-home {
+  &__to-home,
+  &__to-favs {
     margin: 16px;
     background-color: var(--primary);
     border: none;
@@ -174,6 +163,24 @@ export default {
     display: inline-block;
     font-size: 14px;
     border-radius: 6px;
+    cursor: pointer;
+  }
+  &__to-favs {
+    background-color: var(--secondary);
+  }
+    &__buy-goods {
+    grid-row: 1 e("/") 3;
+    background-color: var(--checkout-btn);
+    border: none;
+    color: white;
+    padding: 4px 48px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    margin: 0 auto;
+    height: 44px;
     cursor: pointer;
   }
 }

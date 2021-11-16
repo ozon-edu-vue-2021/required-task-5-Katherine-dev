@@ -1,16 +1,16 @@
 <template>
-  <div class="goods__container">
+  <div class="favs__container">
     <div class="header__wrapper">
-    <span class="goods__title">
-      Главная
-    </span>
-    <div class="buttons__wrapper">
-      <button @click="$router.push('/cart')" class="button__to-cart">Перейти в корзину</button>
-      <button @click="$router.push('/favs')" class="button__to-favs">Перейти в избранное</button>
+       <span class="favs__title">
+        Избранное
+      </span>
+      <div class="buttons__wrapper">
+        <button @click="$router.push('/cart')" class="button__to-cart">Перейти в корзину</button>
+        <button @click="$router.push('/')" class="button__to-home">Перейти на главную</button>
+      </div>
     </div>
-    </div>
-    <div class="goods__wrapper">
-      <Good v-for="(good,index) in goods" :key="good.id +'/'+ index"
+    <div class="favs__wrapper">
+      <Good v-for="(good,index) in favourites" :key="good.id +'/'+ index"
       :title="good.title"
       :cost="good.cost"
       :image="good.image"
@@ -26,18 +26,19 @@ import Good from "../components/Good.vue";
 
 export default {
   computed: {
-    goods() {
-      return this.$store.getters.getGoods;
+    favourites() {
+      return this.$store.getters.getFavourites;
     },
   },
-  components: { Good }
+  components: { Good },
 };
 </script>
+
 <style>
 @import "../style/colors.css";
 </style>
 <style lang="less" scoped>
-.goods {
+.favs {
   &__wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -58,7 +59,8 @@ export default {
   }
 }
 .button {
-  &__to-cart, &__to-favs {
+  &__to-cart,
+  &__to-home {
     margin: 16px;
     background-color: var(--primary);
     border: none;
@@ -71,7 +73,7 @@ export default {
     border-radius: 6px;
     cursor: pointer;
   }
-  &__to-favs {
+  &__to-home {
     background-color: var(--secondary);
   }
 }

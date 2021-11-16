@@ -4,6 +4,8 @@
       <img v-if="image" :src="image" :alt="title" width="300" height="300">
       <div v-else class="good__no-image">Нет изображения</div>
     </div>
+    <div class="good__footer">
+      <div>
     <div class="good__cost">
       <span v-if="cost">
         {{ cost }} руб.
@@ -13,18 +15,28 @@
       </span>
     </div>
     <div class="good__title">{{ title }}</div>
+    </div>
+    <WhiteHeart v-show="!this.fav" class="heart" @click="addToFavouriteOrRemove"/>
+    <RedHeart v-show="this.fav" class="heart" @click="addToFavouriteOrRemove"/>
+    </div>
     <div v-if="getCountInCart" class="good__in-cart">
       <button @click="increaseCounter" class="plus-btn">+</button>
       <span class="good__count">{{getCountInCart}}</span>
       <button @click="decreaseCounter" class="minus-btn">-</button>
     </div>
+    
     <button v-else @click="addToCart" class="good__to-cart">
       В корзину
     </button>
+    
+    
   </div>
 </template>
 
 <script>
+import WhiteHeart from "../assets/svg/heart.svg";
+import RedHeart from "../assets/svg/red-heart.svg";
+
 export default {
   props: {
     id: {
@@ -45,8 +57,15 @@ export default {
       default: () => null,
       type: [Number, null],
     },
+    fav: {
+      required: true,
+      type: [Boolean, null],
+    },
   },
-
+  components: {
+    WhiteHeart,
+    RedHeart,
+  },
   computed: {
     getGoodsInCart() {
       return this.$store.getters.getGoodsInCart;
@@ -57,6 +76,9 @@ export default {
         return inCart.count;
       }
       return 0;
+    },
+    isFav() {
+      return this.fav;
     },
   },
   methods: {
@@ -74,6 +96,9 @@ export default {
     },
     decreaseCounter() {
       this.$store.commit("decreaseCount", this.id);
+    },
+    addToFavouriteOrRemove() {
+      this.$store.commit("changeStatus", this.id);
     },
   },
 };
@@ -111,6 +136,11 @@ export default {
   &__count {
     margin-left: 8px;
   }
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 .plus-btn,
 .minus-btn {
@@ -132,5 +162,10 @@ export default {
 }
 .minus-btn {
   margin-left: 8px;
+}
+.heart {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 }
 </style>

@@ -39,22 +39,31 @@ export default new Vuex.Store({
       state.goodsInCart = state.goodsInCart.filter((it) => it.id !== goodId);
     },
     increaseCount(state, goodId) {
-       state.goodsInCart.forEach((el) => {
+      state.goodsInCart.forEach((el) => {
         if (el.id === goodId) {
           el.count++;
         }
-      })
+      });
     },
     decreaseCount(state, goodId) {
       state.goodsInCart.forEach((el) => {
-       if (el.id === goodId && el.count > 0) {
-         el.count--;
+        if (el.id === goodId && el.count > 0) {
+          el.count--;
         }
         if (el.count === 0) {
-         state.goodsInCart = state.goodsInCart.filter((el) => el.id !== goodId)
+          state.goodsInCart = state.goodsInCart.filter(
+            (el) => el.id !== goodId
+          );
         }
-     })
-   }
+      });
+    },
+    changeStatus(state, goodId) {
+      state.goods.forEach((el) => {
+        if (el.id === goodId) {
+          el.fav = !el.fav;
+        }
+      });
+    },
   },
   actions: {
     async fetchGoods(context) {
@@ -68,6 +77,7 @@ export default new Vuex.Store({
           title: good.dish,
           cost: Math.floor(Math.random() * 1000) + 1,
           image: images[Math.round(Math.random() * (images.length - 1))],
+          fav: false,
         }));
 
         if (goods.length) {
@@ -96,6 +106,9 @@ export default new Vuex.Store({
     },
     getCartLastItemId: (state) => {
       return state.goodsInCart[state.goodsInCart.length - 1]?.id;
+    },
+    getFavourites: (state) => {
+      return state.goods.filter((it) => it.fav === true);
     },
   },
   modules: {},
