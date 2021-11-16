@@ -2,7 +2,7 @@
   <div class="cart__container">
     <div class="header__wrapper">
       <div class="cart__title">Корзина</div>
-      <div class="buttons__wrppaer">
+      <div class="buttons__wrapper">
         <button @click="$router.push('/')" class="button__to-home">На главную</button>
         <button @click="$router.push('/favs')" class="button__to-favs">В избранное</button>
       </div>

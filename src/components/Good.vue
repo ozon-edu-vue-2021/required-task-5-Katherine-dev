@@ -6,18 +6,20 @@
     </div>
     <div class="good__footer">
       <div>
-    <div class="good__cost">
-      <span v-if="cost">
-        {{ cost }} руб.
-      </span>
-      <span v-else>
-        Цена не указана
-      </span>
-    </div>
-    <div class="good__title">{{ title }}</div>
-    </div>
-    <WhiteHeart v-show="!this.fav" class="heart" @click="addToFavouriteOrRemove"/>
-    <RedHeart v-show="this.fav" class="heart" @click="addToFavouriteOrRemove"/>
+        <div class="good__cost">
+          <span v-if="cost">
+            {{ cost }} руб.
+          </span>
+          <span v-else>
+            Цена не указана
+          </span>
+        </div>
+        <div class="good__title">
+          {{ title }}
+        </div>
+      </div>
+      <WhiteHeart v-show="!this.fav" class="heart" @click="addToFavouriteOrRemove"/>
+      <RedHeart v-show="this.fav" class="heart" @click="addToFavouriteOrRemove"/>
     </div>
     <div v-if="getCountInCart" class="good__in-cart">
       <button @click="increaseCounter" class="plus-btn">+</button>
@@ -167,5 +169,6 @@ export default {
   width: 30px;
   height: 30px;
   cursor: pointer;
+  margin-right: 8px;
 }
 </style>
