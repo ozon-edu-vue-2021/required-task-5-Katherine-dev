@@ -1,14 +1,13 @@
 <template>
-  <div id="app">
-  </div>
+  <router-view id="app" />
 </template>
 
 <script>
-
 export default {
   name: "App",
-  components: {
-    Form,
+  components: {},
+  created() {
+    this.$store.dispatch("fetchGoods");
   },
 };
 </script>
@@ -31,4 +30,3 @@ body,
 * {
   box-sizing: border-box;
 }
-</style>
